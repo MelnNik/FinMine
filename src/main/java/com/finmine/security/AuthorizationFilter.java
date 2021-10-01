@@ -28,7 +28,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // Add public access API
-        if (request.getServletPath().equals("/login") || request.getServletPath().equals("/api/v1/registration") || request.getServletPath()
+        if (request.getServletPath().equals("/login") || request.getServletPath().equals("/register") || request.getServletPath()
                 .equals("/token/refresh/**")
         ) {
             filterChain.doFilter(request, response);
@@ -37,7 +37,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
                 try {
                     String token = authorizationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                    Algorithm algorithm = Algorithm.HMAC256("b4dc9ad7992de87ce0d39d268086a7f41636b36b5a57754da8c67ead991621fd".getBytes());
                     JWTVerifier verifier = JWT.require(algorithm).build();
                     DecodedJWT decodedJWT = verifier.verify(token);
                     String email = decodedJWT.getSubject();

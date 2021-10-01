@@ -27,13 +27,16 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 public class AppUserController {
 
     private final AppUserRepository appUserRepository;
+    private final AppUserService appUserService;
 
-    @RequestMapping(value = "/username", method = RequestMethod.GET)
+    // TODO: Move logic to appUserService
+    @RequestMapping(value = "/get_current_user", method = RequestMethod.GET)
     @ResponseBody
-    public String currentUserRole(HttpServletRequest request) {
+    public Principal currentUserPrincipal(HttpServletRequest request) {
         Principal principal = request.getUserPrincipal();
-        AppUser appUser = appUserRepository.findByEmail(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("Email is not found"));
-        return String.valueOf(appUser.getAppUserRole());
+        // AppUser appUser = appUserRepository.findByEmail(principal.getName()).orElseThrow(() -> new UsernameNotFoundException("Email is not found"));
+        //return String.valueOf(appUser.getAppUserRole());
+        return principal;
     }
 
     @GetMapping("/secret")
@@ -41,14 +44,21 @@ public class AppUserController {
         return lol.toLowerCase();
     }
 
-    // when access token expires
+
+    // set subscribed/user roles
+    @PostMapping("/role/setrole")
+    public ResponseEntity<?> setRole(@RequestBody String role) {
+        return ResponseEntity.ok().build();
+    }
+
+
     @GetMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             try {
                 String refreshToken = authorizationHeader.substring("Bearer ".length());
-                Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
+                Algorithm algorithm = Algorithm.HMAC256("b4dc9ad7992de87ce0d39d268086a7f41636b36b5a57754da8c67ead991621fd".getBytes());
                 JWTVerifier verifier = JWT.require(algorithm).build();
                 DecodedJWT decodedJWT = verifier.verify(refreshToken);
                 String email = decodedJWT.getSubject();
@@ -86,9 +96,4 @@ public class AppUserController {
 
     }
 
-
-    @PostMapping("/role/setrole")
-    public ResponseEntity<?> setRole(@RequestBody String role) {
-        return ResponseEntity.ok().build();
-    }
 }
