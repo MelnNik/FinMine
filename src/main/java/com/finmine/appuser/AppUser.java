@@ -26,7 +26,7 @@ public class AppUser implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private AppUserRole appUserRole;
-    // TODO: Subscribed and create service to check subscriptions
+
 
     public AppUser(String email, String password, AppUserRole appUserRole) {
         this.email = email;

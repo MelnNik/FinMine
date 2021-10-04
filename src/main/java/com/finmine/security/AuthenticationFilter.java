@@ -46,7 +46,7 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             throws IOException, ServletException {
         User user = (User) authResult.getPrincipal();
         Algorithm algorithm = Algorithm.HMAC256("b4dc9ad7992de87ce0d39d268086a7f41636b36b5a57754da8c67ead991621fd".getBytes());
-        String accessToken = JWT.create().withSubject(user.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + 10 * 60 * 1000))
+        String accessToken = JWT.create().withSubject(user.getUsername()).withExpiresAt(new Date(System.currentTimeMillis() + 30L * 24 * 60 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString()).withClaim("appUserRole", user.getAuthorities().stream().map(
                         GrantedAuthority::getAuthority).collect(Collectors.toList())).sign(algorithm);
 
