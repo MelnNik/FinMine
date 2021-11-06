@@ -1,10 +1,33 @@
 package com.finmine.whatworks;
 
-import org.springframework.context.annotation.Bean;
+import com.finmine.fastapi.FastAPIService;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
+@AllArgsConstructor
 public class WhatWorksService {
+
+    private final FastAPIService fastAPIService;
+
+
+    // Pull the main table for what works from the db
+    public String mainWhatWorks() {
+        return "current table";
+    }
+
+    public String strategyWhatWorks() {
+        return "current strat";
+    }
+
+    // Post data from db to fastapi works main view with main strategies and create a table from it to show in mainWhatWorks
+    public String whatWorksPost() {
+        return fastAPIService.localApiClient().get().uri("/works").retrieve().bodyToMono(String.class).block();
+    }
+
+    // Get tickers for a particular strategy
+    public String getStrategyWhatWorks(String strategy) {
+        return fastAPIService.localApiClient().get().uri("/works/" + strategy).retrieve().bodyToMono(String.class).block();
+    }
 
 }
