@@ -1,11 +1,10 @@
-package com.finmine.whatworks;
+package com.finmine.whatworks.strategy;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.io.Serial;
 import java.io.Serializable;
 
 @Getter
@@ -18,6 +17,7 @@ public class WhatWorksStrategyTickers implements Serializable {
     private Long id;
     private String ticker;
     private Double buyPrice;
+    // TODO: Create service to AutoUpdatePrice
     private Double currentPrice;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)

@@ -1,6 +1,7 @@
 package com.finmine.whatworks;
 
 import com.finmine.fastapi.FastAPIService;
+import com.finmine.whatworks.strategy.WhatWorksStrategyRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ public class WhatWorksService {
 
     private final FastAPIService fastAPIService;
     private final WhatWorksStrategyRepository whatWorksStrategyRepository;
-    private final WhatWorksTableRepository whatWorksTableRepository;
+    private final WhatWorksRepository whatWorksRepository;
 
 
     // Pull the main table for what works from the db

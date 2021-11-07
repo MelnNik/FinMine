@@ -10,15 +10,15 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @Entity
-public class WhatWorksTable {
+public class WhatWorks {
 
     // TODO: Table for main view with all strategies' stats with strategy's name; historical performance from book and current performance
     // Send latest saved table to main view on request
 
-    @SequenceGenerator(name = "table_sequance", sequenceName = "table_sequance", allocationSize = 1)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "table_sequance")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    // TODO: OneToMany with what works strategy
 
 
 }

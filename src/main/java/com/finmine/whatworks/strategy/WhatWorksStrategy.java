@@ -1,15 +1,11 @@
-package com.finmine.whatworks;
+package com.finmine.whatworks.strategy;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -24,11 +20,13 @@ public class WhatWorksStrategy implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    // TODO: add performance column that aggregates tickers performance
+    // TODO: add performance column that aggregates tickers performance(new package utils as price updater will be used in other parts as well)
     private Double performance;
 
     @OneToMany(mappedBy = "whatWorksStrategy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     Set<WhatWorksStrategyTickers> whatWorksStrategyTickers;
+
+    // TODO: ManyToOne with WhatWorks
 
     public WhatWorksStrategy(String name) {
         this.name = name;

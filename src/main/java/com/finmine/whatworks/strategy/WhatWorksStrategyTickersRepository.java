@@ -1,6 +1,5 @@
-package com.finmine.whatworks;
+package com.finmine.whatworks.strategy;
 
-import net.bytebuddy.TypeCache;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.domain.Sort;
 

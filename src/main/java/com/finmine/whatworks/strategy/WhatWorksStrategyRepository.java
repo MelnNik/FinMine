@@ -1,6 +1,5 @@
-package com.finmine.whatworks;
+package com.finmine.whatworks.strategy;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

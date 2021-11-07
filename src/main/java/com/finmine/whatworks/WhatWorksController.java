@@ -1,8 +1,10 @@
 package com.finmine.whatworks;
 
-import com.finmine.fastapi.FastAPIService;
+import com.finmine.whatworks.strategy.WhatWorksStrategy;
+import com.finmine.whatworks.strategy.WhatWorksStrategyRepository;
+import com.finmine.whatworks.strategy.WhatWorksStrategyTickers;
+import com.finmine.whatworks.strategy.WhatWorksStrategyTickersRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +28,7 @@ public class WhatWorksController {
     // View for each strategy, pulls data from WhatWorksStrategy on specific strategy request
     @GetMapping("/works/{strategy}")
     public String WorksStrategy(@PathVariable String strategy) {
+        // TODO: GET data from db for specific strategy IN A JSON FORMAT
         return whatWorksService.strategyWhatWorks();
     }
 
@@ -41,14 +44,15 @@ public class WhatWorksController {
     @GetMapping("/fastapi/works/{strategy}")
     // TODO: move code to service
     public String GetWorksStrategy(@PathVariable String strategy) {
-        // TODO: ONCE STRATEGY IS IN AND ONLY UPDATE IT
+        // TODO: ONCE STRATEGY IS IN AND ONLY UPDATE IT; IF NEW TICKERS IN A STRATEGY -> STILL TAKE PAST PERFORMANCE INTO CONSIDERATION(on ticker update - performance +=)
         String tickersList = whatWorksService.getStrategyWhatWorks(strategy).replaceAll("[-+.^:\"\\[\\]]", "");
         String[] data = tickersList.split(",");
         // For element in a list -> populate db and get price here as well
         WhatWorksStrategy whatWorksStrategy = new WhatWorksStrategy(strategy);
-        whatWorksStrategy.setName("long_25");
+        whatWorksStrategy.setName(strategy);
         whatWorksStrategyRepository.save(whatWorksStrategy);
         for (String str : data) {
+            // TODO: Get price
             whatWorksStrategyTickersRepository.save(new WhatWorksStrategyTickers(str, 5.4, new Random().nextDouble(), whatWorksStrategy));
         }
         return Arrays.toString(data);
