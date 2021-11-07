@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 public class WhatWorksService {
 
     private final FastAPIService fastAPIService;
+    private final WhatWorksStrategyRepository whatWorksStrategyRepository;
+    private final WhatWorksTableRepository whatWorksTableRepository;
 
 
     // Pull the main table for what works from the db

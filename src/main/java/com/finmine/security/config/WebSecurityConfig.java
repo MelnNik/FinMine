@@ -30,7 +30,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers(HttpMethod.GET, "/api/user/**").hasAuthority("USER");
         http.authorizeRequests().antMatchers("/register", "/token/refresh/**", "/login", "/fastapi/**").permitAll(); // Public access API
-        http.authorizeRequests().anyRequest().authenticated();
+        // http.authorizeRequests().anyRequest().authenticated();
         http.addFilter(new AuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new AuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
