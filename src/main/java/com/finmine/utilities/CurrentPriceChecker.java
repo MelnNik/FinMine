@@ -1,5 +1,5 @@
 package com.finmine.utilities;
 
-// TODO: check and update prices of all the tickers in the db(implement getStockPrice)
+// TODO: Service for parsing through all tickers in strategies and update their prices(implement getStockPrice)
 public class CurrentPriceChecker {
 }
