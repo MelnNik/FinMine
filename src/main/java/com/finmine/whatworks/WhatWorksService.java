@@ -11,7 +11,6 @@ public class WhatWorksService {
 
     private final FastAPIService fastAPIService;
     private final WhatWorksStrategyRepository whatWorksStrategyRepository;
-    private final WhatWorksRepository whatWorksRepository;
 
 
     // Pull the main table for what works from the db

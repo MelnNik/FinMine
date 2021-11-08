@@ -1,11 +1,13 @@
 package com.finmine.whatworks.strategy;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -14,7 +16,6 @@ import java.util.Set;
 @Entity
 public class WhatWorksStrategy implements Serializable {
 
-    // TODO: table for each strategy with its name, tickers and price of each ticker on buy and current
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +25,8 @@ public class WhatWorksStrategy implements Serializable {
     private Double performance;
 
     @OneToMany(mappedBy = "whatWorksStrategy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    Set<WhatWorksStrategyTickers> whatWorksStrategyTickers;
+    @JsonManagedReference
+    List<WhatWorksStrategyTickers> whatWorksStrategyTickers;
 
     // TODO: ManyToOne with WhatWorks
 

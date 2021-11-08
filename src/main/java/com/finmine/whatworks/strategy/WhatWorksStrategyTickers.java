@@ -1,5 +1,6 @@
 package com.finmine.whatworks.strategy;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,6 +22,7 @@ public class WhatWorksStrategyTickers implements Serializable {
     private Double currentPrice;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
+    @JsonBackReference
     private WhatWorksStrategy whatWorksStrategy;
 
     public WhatWorksStrategyTickers(String ticker, Double buyPrice, Double currentPrice, WhatWorksStrategy whatWorksStrategy) {
