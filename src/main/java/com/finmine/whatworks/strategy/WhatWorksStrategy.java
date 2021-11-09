@@ -24,7 +24,7 @@ public class WhatWorksStrategy implements Serializable {
     // TODO: add performance column that aggregates tickers performance(new package utils as price updater will be used in other parts as well)
     private Double performance;
 
-    @OneToMany(mappedBy = "whatWorksStrategy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "whatWorksStrategy", fetch = FetchType.LAZY)
     @JsonManagedReference
     List<WhatWorksStrategyTickers> whatWorksStrategyTickers;
 

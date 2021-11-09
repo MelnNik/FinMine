@@ -9,4 +9,8 @@ public interface WhatWorksStrategyTickersRepository extends CrudRepository<WhatW
 
     List<WhatWorksStrategyTickers> findByWhatWorksStrategy(WhatWorksStrategy whatWorksStrategy);
 
+    WhatWorksStrategyTickers findWhatWorksStrategyTickersByTicker(String ticker);
+
+
+
 }
