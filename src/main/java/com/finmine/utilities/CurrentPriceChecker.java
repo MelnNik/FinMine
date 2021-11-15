@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Scanner;
 
 // TODO: scheduled Service for parsing through all tickers in strategies and update their prices + performance(implement getStockPrice)
+
+// TODO: THINK OF HOW TO UPDATE PERFORMANCE FOR MAIN TABLE
 // CurrentPriceUpdater + Performance updater
 
 @AllArgsConstructor
@@ -26,7 +28,7 @@ public class CurrentPriceChecker {
             List<WhatWorksStrategyTickers> tickers = strat.getWhatWorksStrategyTickers();
             Double counter = (double) 0;
             for (WhatWorksStrategyTickers ticker : tickers) {
-                counter += ticker.getBuyPrice() / (ticker.getCurrentPrice() - ticker.getBuyPrice());
+                counter += ((ticker.getCurrentPrice() - ticker.getBuyPrice()) / ticker.getBuyPrice()) * 100;
             }
             // TODO: update performance of each strategy depending on price IN CURRENT PRICE CHECKER
             try {

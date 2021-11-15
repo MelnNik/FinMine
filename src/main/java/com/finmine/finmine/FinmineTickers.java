@@ -1,7 +1,6 @@
-package com.finmine.investors;
+package com.finmine.finmine;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.finmine.whatworks.strategy.WhatWorksStrategy;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @Entity
-public class InvestorsTickers implements Serializable {
+public class FinmineTickers implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,5 +23,8 @@ public class InvestorsTickers implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     @JsonBackReference
-    private Investors investors;
+    private Finmine finmine;
+
+    public FinmineTickers(String str, Double currentPrice, Double currentPrice1, Finmine byName) {
+    }
 }

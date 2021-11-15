@@ -9,10 +9,7 @@ import com.finmine.whatworks.strategy.WhatWorksStrategyTickersRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
@@ -39,7 +36,9 @@ public class WhatWorksService {
 
     // Get tickers for a particular strategy
     public String getStrategyWhatWorks(String strategy) {
-        String tickersList = fastAPIService.localApiClient().get().uri("/works/" + strategy).retrieve().bodyToMono(String.class).block().replaceAll("[-+.^:\"\\[\\]]", "");
+        String tickersList =
+                Objects.requireNonNull(fastAPIService.localApiClient().get().uri("/works/" + strategy).retrieve().bodyToMono(String.class).block())
+                        .replaceAll("[-+.^:\"\\[\\]]", "");
         String[] data = tickersList.split(",");
 
         WhatWorksStrategy currentStrategy = whatWorksStrategyRepository.findByName(strategy);
@@ -59,7 +58,7 @@ public class WhatWorksService {
                 for (String str : copyTickersCurrentlyIn) {
                     Double currentPrice = GetStockPrice.getCurrentPrice(str);
                     Double boughtPrice = whatWorksStrategyTickersRepository.findWhatWorksStrategyTickersByTicker(str).getBuyPrice();
-                    currentStrategy.setPerformance(currentStrategy.getPerformance() + boughtPrice / (currentPrice - boughtPrice));
+                    currentStrategy.setPerformance(currentStrategy.getPerformance() + ((currentPrice - boughtPrice) / boughtPrice) * 100);
                     whatWorksStrategyRepository.save(currentStrategy);
                     whatWorksStrategyTickersRepository.deleteById(whatWorksStrategyTickersRepository.findWhatWorksStrategyTickersByTicker(str).getId());
                 }

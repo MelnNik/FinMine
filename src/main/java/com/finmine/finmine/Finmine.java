@@ -1,7 +1,6 @@
-package com.finmine.investors;
+package com.finmine.finmine;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.finmine.whatworks.strategy.WhatWorksStrategyTickers;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @Entity
-public class Investors implements Serializable {
+public class Finmine implements Serializable {
 
 
     @Id
@@ -24,7 +23,10 @@ public class Investors implements Serializable {
     // TODO: add performance column that aggregates tickers performance(new package utils as price updater will be used in other parts as well)
     private Double performance;
 
-    @OneToMany(mappedBy = "investors", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "finmine", fetch = FetchType.LAZY)
     @JsonManagedReference
-    List<InvestorsTickers> investorsTickers;
+    List<FinmineTickers> finmineTickers;
+
+    public Finmine(String investor) {
+    }
 }
