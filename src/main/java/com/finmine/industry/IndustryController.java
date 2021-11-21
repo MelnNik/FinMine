@@ -1,4 +1,4 @@
-package com.finmine.industries;
+package com.finmine.industry;
 
 import com.finmine.fastapi.FastAPIService;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @AllArgsConstructor
-public class IndustriesController {
+public class IndustryController {
     private final FastAPIService fastAPIService;
 
 

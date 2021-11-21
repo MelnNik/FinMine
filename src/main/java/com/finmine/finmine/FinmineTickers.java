@@ -1,6 +1,7 @@
 package com.finmine.finmine;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -11,8 +12,10 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 public class FinmineTickers implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -20,11 +23,10 @@ public class FinmineTickers implements Serializable {
     private Double buyPrice;
     // TODO: Create service to AutoUpdatePrice
     private Double currentPrice;
+    private Double Multiplier;
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(nullable = false)
     @JsonBackReference
     private Finmine finmine;
 
-    public FinmineTickers(String str, Double currentPrice, Double currentPrice1, Finmine byName) {
-    }
 }
