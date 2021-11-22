@@ -1,20 +1,14 @@
 package com.finmine.finmine;
 
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.finmine.fastapi.FastAPIService;
-import com.finmine.utilities.GetStockPrice;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
 import lombok.AllArgsConstructor;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
 import com.google.gson.*;
 
-import java.io.StringReader;
-import java.lang.reflect.Type;
 import java.util.*;
 
 @RestController
@@ -22,28 +16,38 @@ import java.util.*;
 public class FinmineController {
     private final FastAPIService fastAPIService;
     private final FinmineRepository finmineRepository;
+    private final FinmineTickersRepository finmineTickersRepository;
 
 
-    // TODO: Main view for investors
     @GetMapping("/finmine")
     public @ResponseBody
-    Iterable<Finmine> Investors() {
+    Iterable<Finmine> Finmine() {
         return finmineRepository.findAll();
     }
 
 
-    // TODO: View by investor
     @GetMapping("/finmine/update")
-    public String InvestorsBy() {
-        Gson gson = new Gson();
+    public String FinmineBy() {
         String tickersList =
-                Objects.requireNonNull(fastAPIService.localApiClient().get().uri("/finmine/").retrieve().bodyToMono(String.class).block())
-                        .replaceAll("[\\\\+^\\[\\]\s\n]", "");
+                Objects.requireNonNull(fastAPIService.localApiClient().get().uri("/finmine/").retrieve().bodyToMono(String.class).block());
+        JSONArray tickersArray = new JSONArray(tickersList);
+        final int n = tickersArray.length();
+        // TODO: Update performance on update
+        try {
+            Finmine finmine = finmineRepository.findByName("main");
+            List<FinmineTickers> finmineTickersList = finmine.getFinmineTickers();
+            return finmineTickersList.toString();
+        } catch (NullPointerException nullPointerException) {
+            Finmine finmine = new Finmine("main");
+            finmineRepository.save(finmine);
+            for (int i = 0; i < n; ++i) {
+                final JSONObject ticker = tickersArray.getJSONObject(i);
+                finmineTickersRepository.save(
+                        new FinmineTickers(ticker.getString("Ticker"), ticker.getDouble("Price"), ticker.getDouble("total_multiplier"), finmine));
 
-        tickersList = tickersList.substring(1, tickersList.length() - 1);
+            }
+        }
 
-        JsonElement stu = gson.fromJson(tickersList, JsonElement.class);
-        System.out.println(stu);
 
         return tickersList;
     }

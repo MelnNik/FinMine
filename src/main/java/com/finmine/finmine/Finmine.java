@@ -22,8 +22,13 @@ public class Finmine implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     private Double performance;
     @OneToMany(mappedBy = "finmine", fetch = FetchType.LAZY)
     @JsonManagedReference
     List<FinmineTickers> finmineTickers;
+
+    public Finmine(String name) {
+        this.name = name;
+    }
 }

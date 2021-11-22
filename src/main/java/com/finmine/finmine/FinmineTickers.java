@@ -29,4 +29,10 @@ public class FinmineTickers implements Serializable {
     @JsonBackReference
     private Finmine finmine;
 
+    public FinmineTickers(String ticker, Double buyPrice, Double multiplier, Finmine finmine) {
+        this.ticker = ticker;
+        this.buyPrice = buyPrice;
+        Multiplier = multiplier;
+        this.finmine = finmine;
+    }
 }
