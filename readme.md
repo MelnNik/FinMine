@@ -16,9 +16,9 @@ Authentication/Authorization: Spring Security
 
 ## 💻 Demo
 
-![Absolute Returns Table](assets/WhatWorksOnWallStreetAbsolute.PNG)
+![Absolute Returns Table](assets/WhatWorksOnWallStreetAbsolute.png)
 
-![Risk Adjusted Returns Table](assets/WhatWorksOnWallStreetAdjusted.PNG)
+![Risk Adjusted Returns Table](assets/WhatWorksOnWallStreetAdjusted.png)
 
 ![List of Controllers](assets/SpringBootSwagger.png)
 
